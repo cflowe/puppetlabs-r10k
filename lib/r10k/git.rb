@@ -137,7 +137,11 @@ module R10K
     def_setting_attr :repositories, {}
 
     def self.get_repo_settings(remote)
-      self.settings[:repositories].find {|r| r[:remote] == remote }
+      result = self.settings[:repositories].find {|r|
+        r.has_key? remote.to_sym
+      }
+
+      if result then result.values[0] else nil end
     end
   end
 end
